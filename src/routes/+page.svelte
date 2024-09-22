@@ -5,18 +5,20 @@
     let step = 1;
 
     // Shared Variables
-    let entryPrice = 0;
-    let stopLoss = 0;
-    let contractSize = 0;
+    let entryPrice = 100;
+    let stopLoss = 90;
+    let contractSize = 2;
 
     // Trade Information
-    let profitTarget = 0;
-    let quantity = 0;
+    let profitTarget = 150;
+    let quantity = 1;
     let isLong = 1; // bool
 
     // Position Size Information
-    let accountBalance = 0;
-    let riskPercentage = 0;
+    let accountBalance = 50000;
+    let riskPercentage = 0.5;
+    let riskAmount = 250;
+    let riskRewardRatio = 3.3;
 </script>
 
 <div class="p-4 flex flex-col items-center font-sans">
@@ -45,7 +47,12 @@
                 bind:isLong
             />
         {:else if step == 2}
-            <PositionSizeInformation bind:accountBalance bind:riskPercentage />
+            <PositionSizeInformation
+                bind:accountBalance
+                bind:riskPercentage
+                bind:riskAmount
+                bind:riskRewardRatio
+            />
         {:else if step == 3}
             <Results
                 {entryPrice}
@@ -55,6 +62,8 @@
                 {quantity}
                 {accountBalance}
                 {riskPercentage}
+                {riskAmount}
+                {riskRewardRatio}
                 {isLong}
             />
         {/if}
