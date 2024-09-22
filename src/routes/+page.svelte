@@ -12,12 +12,11 @@
     // Trade Information
     let profitTarget = 0;
     let quantity = 0;
-    let isLon = 1; // bool
+    let isLong = 1; // bool
 
     // Position Size Information
     let accountBalance = 0;
     let riskPercentage = 0;
-    // let contractSize = 0;
 </script>
 
 <div class="p-4 flex flex-col items-center font-sans">
@@ -43,41 +42,47 @@
                 bind:stopLoss
                 bind:contractSize
                 bind:quantity
-                bind:isLon
+                bind:isLong
             />
         {:else if step == 2}
             <PositionSizeInformation bind:accountBalance bind:riskPercentage />
         {:else if step == 3}
             <Results
                 {entryPrice}
-                {profitTarget}
                 {stopLoss}
                 {contractSize}
+                {profitTarget}
                 {quantity}
-                {isLon}
                 {accountBalance}
+                {riskPercentage}
+                {isLong}
             />
         {/if}
-    </div>
-    <!-- <div class="flex flex-col items-center mb-4">
-        {entryPrice}
-        {profitTarget}
-        {stopLoss}
-        {contractSize}
-        {quantity}
-        {isLon}
-        {accountBalance}
-    </div> -->
-    <div class="flex justify-evenly mx-4">
-        {#if step > 1}
-            <button type="button" class="btn btn-active btn-danger w-full" on:click={() => --step}
-                >Back</button
-            >
-        {/if}
-        {#if step < 3}
-            <button type="button" class="btn btn-active btn-primary w-full" on:click={() => ++step}
-                >Continue</button
-            >
-        {/if}
+        <!-- ===== DEBUG VALUES -->
+        <!-- <div class="flex flex-col items-center mb-4">
+            {entryPrice}
+            {profitTarget}
+            {stopLoss}
+            {contractSize}
+            {quantity}
+            {accountBalance}
+            {isLong}
+        </div> -->
+        <div class="flex justify-evenly mx-4">
+            {#if step > 1}
+                <button
+                    type="button"
+                    class="btn btn-active btn-danger w-full"
+                    on:click={() => --step}>Back</button
+                >
+            {/if}
+            {#if step < 3}
+                <button
+                    type="button"
+                    class="btn btn-active btn-primary w-full"
+                    on:click={() => ++step}>Continue</button
+                >
+            {/if}
+        </div>
     </div>
 </div>
