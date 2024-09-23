@@ -13,10 +13,6 @@
     export let riskRewardRatio;
     export let isLong;
 
-    // const riskReward = 3.3;
-    // const positionSize = 2;
-    // const positionSize = 1.69;
-
     // ---------- CALCULATE TRADE P/L & R RATIO
     function calculateTrade(entryPrice, profitTarget, stopLoss, contractSize, quantity, isLong) {
         const profitLoss = isLong
@@ -30,9 +26,9 @@
         const riskReward = profitLoss / riskAmount;
 
         return {
-            potentialProfit: profitLoss,
-            potentialLoss: riskAmount,
-            rRatio: Math.round(riskReward * 100) / 100,
+            potentialProfit: "$" + profitLoss,
+            potentialLoss: "-$" + riskAmount,
+            rRatio: Math.round(riskReward * 100) / 100 + "R",
         };
     }
 
@@ -67,16 +63,13 @@
                 ? entryPrice + rewardAmount / (basicPositionSize * contractSize)
                 : entryPrice - rewardAmount / (basicPositionSize * contractSize);
 
-        // round down to nearest whole contract
-        // const finalPositionSize = Math.floor(basicPositionSize);
-        // const finalPositionSize = Math.ceil(basicPositionSize);
         const finalPositionSize = basicPositionSize;
 
         return {
             positionSize: finalPositionSize,
-            riskAmount: actualRiskAmount,
-            rewardAmount: rewardAmount,
-            profitTarget: profitTarget,
+            riskAmount: "-$" + actualRiskAmount,
+            rewardAmount: "$" + rewardAmount,
+            profitTarget: "$" + Math.round(profitTarget * 100) / 100,
         };
     }
 
@@ -100,11 +93,6 @@
         contractSize,
     );
 
-    // console.log(`Profit: ${tradeResult.potentialProfit}`);
-    // console.log(`Loss: ${tradeResult.potentialLoss}`);
-    // console.log(`R: ${tradeResult.rRatio}`);
-    // console.log(`Position Size: ${positionSize} contract`);
-
     console.log(positionSizeRiskReward.contractSize);
 </script>
 
@@ -118,9 +106,12 @@
         <MetricCard metricValue={tradeResult.potentialProfit} message="Potential Profit" />
         <MetricCard metricValue={tradeResult.potentialLoss} message="Potential Loss" />
         <MetricCard metricValue={tradeResult.rRatio} message="R Ratio" />
+        <MetricCard metricValue={contractSize} message="Contract Size" />
     </div>
     <div class="mt-5 mb-3 mx-2">
-        <h1 class="prose-2xl dark:prose-invert">Position Size</h1>
+        <!-- FIXME - Position Size -->
+
+        <h1 class="prose-2xl dark:prose-invert bg-error">FIX Position Size</h1>
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2">
@@ -128,13 +119,8 @@
             metricValue={positionSizeRiskReward.positionSize}
             message="Final Position Size"
         />
-        <MetricCard
-            metricValue={positionSizeRiskReward.riskAmount}
-            message="Position Size Risk Amount"
-        />
-        <MetricCard
-            metricValue={positionSizeRiskReward.rewardAmount}
-            message="Position Size Reward Amount"
-        />
+        <MetricCard metricValue={positionSizeRiskReward.riskAmount} message="Risk Amount" />
+        <MetricCard metricValue={positionSizeRiskReward.rewardAmount} message="Reward Amount" />
+        <MetricCard metricValue={positionSizeRiskReward.profitTarget} message="Profit Target" />
     </div>
 </div>

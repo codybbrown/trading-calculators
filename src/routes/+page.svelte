@@ -6,6 +6,7 @@
 
     // Shared Variables
     let entryPrice = 100;
+
     let stopLoss = 90;
     let contractSize = 2;
 

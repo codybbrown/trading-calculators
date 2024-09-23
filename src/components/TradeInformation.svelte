@@ -1,5 +1,8 @@
 <script>
     import NumberInput from "./NumberInput.svelte";
+    import DollarInput from "./DollarInput.svelte";
+    import SelectInput from "./SelectInput.svelte"; // Exports multiplier prop
+
     export let entryPrice = 0;
     export let profitTarget = 0;
     export let stopLoss = 0;
@@ -9,10 +12,11 @@
 </script>
 
 <div>
+    <SelectInput bind:multiplier={contractSize} id="contract-size" label="Instrument" />
     <NumberInput bind:value={entryPrice} id="entry-price" label="Entry Price" />
     <NumberInput bind:value={profitTarget} id="profit-target" label="Profit Target" />
-    <NumberInput bind:value={stopLoss} id="entry-price" label="Stop Loss" />
-    <NumberInput bind:value={contractSize} id="entry-price" label="Contract Size" />
-    <NumberInput bind:value={quantity} id="entry-price" label="Quantity" />
-    <NumberInput bind:value={isLong} id="entry-price" label="Long Position? (bool - 1 or 0)" />
+    <NumberInput bind:value={stopLoss} id="stop-loss" label="Stop Loss" />
+    <NumberInput bind:value={contractSize} id="contract-size" label="Contract Size" />
+    <NumberInput bind:value={quantity} id="quantity" label="Quantity" />
+    <NumberInput bind:value={isLong} id="is-long" label="Long Position? (bool - 1 or 0)" />
 </div>
