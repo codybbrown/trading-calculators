@@ -4,10 +4,10 @@
     export let multiplier;
 
     const contractOptions = [
-        { name: "Select", multiplier: 1 },
+        // { name: "Select", multiplier: 1 },
         { name: "Micro Nasdaq", multiplier: 2 },
         { name: "Micro Gold", multiplier: 10 },
-        { name: "Micro Crude", multiplier: 100 },
+        // { name: "Micro Crude", multiplier: 100 },
     ];
     // Initialize the selected value and multiplier
     let selectedContract = contractOptions[0].name;

@@ -1,25 +1,23 @@
 <script>
-    import PositionSizeInformation from "../components/PositionSizeInformation.svelte";
     import TradeInformation from "../components/TradeInformation.svelte";
     import Results from "../components/Results.svelte";
     let step = 1;
 
     // Shared Variables
-    let entryPrice = 100;
-
-    let stopLoss = 90;
-    let contractSize = 2;
-
-    // Trade Information
-    let profitTarget = 150;
     let quantity = 1;
-    let isLong = 1; // bool
-
-    // Position Size Information
+    let entryPrice = 15681.25;
+    let profitTarget = 16308.75;
+    let stopLoss = 15367.5;
     let accountBalance = 50000;
+    let accountSize = 50000;
     let riskPercentage = 0.5;
     let riskAmount = 250;
     let riskRewardRatio = 3.3;
+
+    let contractSize = 2;
+    let isLong; // bool
+
+    // Position Size Information
 </script>
 
 <div class="p-4 flex flex-col items-center font-sans">
@@ -32,29 +30,24 @@
     <p class="divider prose-xl dark:prose-invert">Start Calculation</p>
 
     <ul class="steps mb-6">
-        <li class="step step-primary">Profit/Loss Details</li>
-        <li class="step {step >= 2 && 'step-primary'}">Position Size Details</li>
-        <li class="step {step >= 3 && 'step-primary'}">Results</li>
+        <li class="step step-primary">Trade Details</li>
+        <li class="step {step >= 2 && 'step-primary'}">Results</li>
+        <!-- <li class="step {step >= 3 && 'step-primary'}">Results</li> -->
     </ul>
 
     <div class="flex flex-col items-center mb-4">
         {#if step == 1}
             <TradeInformation
+                bind:quantity
                 bind:entryPrice
                 bind:profitTarget
                 bind:stopLoss
+                bind:accountSize
+                bind:riskPercentage
                 bind:contractSize
-                bind:quantity
                 bind:isLong
             />
         {:else if step == 2}
-            <PositionSizeInformation
-                bind:accountBalance
-                bind:riskPercentage
-                bind:riskAmount
-                bind:riskRewardRatio
-            />
-        {:else if step == 3}
             <Results
                 {entryPrice}
                 {stopLoss}
@@ -68,16 +61,7 @@
                 {isLong}
             />
         {/if}
-        <!-- ===== DEBUG VALUES -->
-        <!-- <div class="flex flex-col items-center mb-4">
-            {entryPrice}
-            {profitTarget}
-            {stopLoss}
-            {contractSize}
-            {quantity}
-            {accountBalance}
-            {isLong}
-        </div> -->
+
         <div class="flex justify-evenly mx-4">
             {#if step > 1}
                 <button
@@ -86,7 +70,7 @@
                     on:click={() => --step}>Back</button
                 >
             {/if}
-            {#if step < 3}
+            {#if step < 2}
                 <button
                     type="button"
                     class="btn btn-active btn-primary w-full"
